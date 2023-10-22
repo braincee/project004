@@ -1,17 +1,20 @@
 'use client'
 
 import createCache from '@emotion/cache'
-import { CacheProvider, EmotionCache } from '@emotion/react'
+import { CacheProvider } from '@emotion/react'
 import { CssVarsProvider } from '@mui/joy/styles'
 import GlobalStyles from '@mui/joy/GlobalStyles'
 import CssBaseline from '@mui/joy/CssBaseline'
-import { AppProps } from 'next/app'
-import createEmotionCache from '@/libs/createEmotionCache'
 import { useState } from 'react'
 import { usePathname, useServerInsertedHTML } from 'next/navigation'
 import theme from '@/libs/theme'
 
-export default function ThemeRegistry(props: any) {
+interface ThemeRegistryProps {
+  options: any
+  children: React.ReactNode
+}
+
+export default function ThemeRegistry(props: ThemeRegistryProps) {
   const { options, children } = props
 
   const [{ cache, flush }] = useState(() => {
