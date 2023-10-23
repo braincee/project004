@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import dynamic from 'next/dynamic'
 
@@ -8,8 +9,27 @@ const SingleBarChart = dynamic(
   }
 )
 
-const BarChart = ({ mapData }: { mapData: any }) => {
-  const { labels, dataValues } = mapData()
+const BarChart = ({ addresses }: { addresses: any }) => {
+  console.log(addresses)
+  const chartData = () => {
+    const data = new Map()
+    const labels: any[] = []
+    const dataValues: any[] = []
+    addresses.map((address: any) => {
+      const date = new Date(address.createdAt).toDateString()
+      if (data.has(date)) {
+        data.set(date, data.get(date) + 1)
+      } else {
+        data.set(date, 1)
+      }
+    })
+    data.forEach((value, key) => {
+      labels.push(key.substring(key.indexOf(' ') + 1))
+      dataValues.push(value)
+    })
+    return { labels, dataValues }
+  }
+  const { labels, dataValues } = chartData()
   return (
     <>
       <SingleBarChart

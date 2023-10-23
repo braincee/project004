@@ -7,22 +7,20 @@ const comparePassword = (password: string, hash: any) => {
   return result
 }
 
-export async function POST(req: NextApiRequest) {
-  const data = req.body
-  const user = JSON.parse(
-    JSON.stringify(
-      await db.query.users.findMany({
-        where: (users, { eq }) => eq(users.email, data.email),
-      })
-    )
-  )
+export async function POST(req: Request) {
+  const { email, password } = await req.json()
+  const user = await db.query.users.findMany({
+    where: (users, { eq }) => eq(users.email, email),
+  })
+
   let response
   if (user) {
-    const status = comparePassword(data.password, user.password)
+    const status = comparePassword(password, user[0].password)
+
     if (status) {
       response = {
-        id: user.id,
-        email: user.email,
+        id: user[0].id,
+        email: user[0].email,
       }
     } else {
       response = 'Invalid password'

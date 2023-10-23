@@ -4,7 +4,7 @@ import { Button, Grid, Input } from '@mui/joy'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 import NFTImage from '@/public/images/nft_image.png'
-import { getContentItems, getUsers } from '@/libs/api'
+import { signIn } from 'next-auth/react'
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
@@ -18,15 +18,13 @@ export default function Home() {
     }
     const email = target.email.value
     const password = target.password.value
-    // await signIn("credentials", {
-    //   redirect: false,
-    //   email,
-    //   password,
-    // });
+    await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    })
     setLoading(false)
-    // router.push('/dashboard')
-
-    console.log(await getContentItems())
+    router.push('/dashboard')
   }
 
   return (

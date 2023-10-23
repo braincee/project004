@@ -24,12 +24,12 @@ const authOptions: NextAuthOptions = {
           }
         )
 
-        if (!authResponse.ok) {
+        if (!authResponse) {
           return null
         }
 
         const user = await authResponse.json()
-        return user.response
+        return user
       },
     }),
   ],
@@ -39,4 +39,6 @@ const authOptions: NextAuthOptions = {
   },
 }
 
-export default NextAuth(authOptions)
+const handler = NextAuth(authOptions)
+
+export { handler as GET, handler as POST }
