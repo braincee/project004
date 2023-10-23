@@ -1,12 +1,9 @@
-import { User } from "@/libs/models";
-import { NextApiRequest, NextApiResponse } from "next";
+import { db } from '@/libs/drizzle/db'
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const response = await User.findAll({
-    order: [["created_at", "DESC"]],
-  });
-  res.status(200).json({ response: response });
+export async function GET() {
+  const response = await db.query.Users.findMany({
+    orderBy: (users, { desc }) => [desc(users.createdAt)],
+  })
+
+  return Response.json(response)
 }

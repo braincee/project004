@@ -59,19 +59,19 @@ export default function ThemeRegistry(props: ThemeRegistryProps) {
     )
   })
 
-  if (pathname.includes('serve')) {
-    // The ThirdWeb Provider has to wrap the component to be able to have access to useAddress
-    // This is why it is still here
-    // I could not find any other way to wrap it around the component.
-    return (
-      <ThirdwebProvider
-        activeChain='ethereum'
-        clientId='19086ab219f91521de7ac12f38c0a1f0'
-      >
-        {children}
-      </ThirdwebProvider>
-    )
-  }
+  // if (pathname.includes('serve')) {
+  //   // The ThirdWeb Provider has to wrap the component to be able to have access to useAddress
+  //   // This is why it is still here
+  //   // I could not find any other way to wrap it around the component.
+  //   return (
+  //     <ThirdwebProvider
+  //       activeChain='ethereum'
+  //       clientId='19086ab219f91521de7ac12f38c0a1f0'
+  //     >
+  //       {children}
+  //     </ThirdwebProvider>
+  //   )
+  // }
 
   return (
     <CacheProvider value={cache}>

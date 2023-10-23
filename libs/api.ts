@@ -1,6 +1,6 @@
 import { v4 as uuidV4 } from 'uuid'
-import supabase from './supabase'
 import { hash } from 'bcrypt-ts'
+import supabase from './supabase'
 
 export const initDb = async () => {
   const response = await fetch('api/initDb')

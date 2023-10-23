@@ -1,40 +1,35 @@
-import { User } from "@/libs/models";
-import { NextApiRequest, NextApiResponse } from "next";
-import { compareSync } from "bcrypt-ts";
+import { NextApiRequest, NextApiResponse } from 'next'
+import { compareSync } from 'bcrypt-ts'
+import { db } from '@/libs/drizzle/db'
 
 const comparePassword = (password: string, hash: any) => {
-  const result = compareSync(password, hash);
-  return result;
-};
+  const result = compareSync(password, hash)
+  return result
+}
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const data = req.body;
+export async function POST(req: NextApiRequest) {
+  const data = req.body
   const user = JSON.parse(
     JSON.stringify(
-      await User.findOne({
-        where: {
-          email: data.email,
-        },
+      await db.query.Users.findMany({
+        where: (users, { eq }) => eq(users.email, data.email),
       })
     )
-  );
-  let response;
+  )
+  let response
   if (user) {
-    const status = comparePassword(data.password, user.password);
+    const status = comparePassword(data.password, user.password)
     if (status) {
       response = {
         id: user.id,
         email: user.email,
-      };
+      }
     } else {
-      response = "Invalid password";
+      response = 'Invalid password'
     }
   } else {
-    response = null;
+    response = null
   }
 
-  res.status(200).json({ response: response });
+  return Response.json(response)
 }

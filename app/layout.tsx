@@ -14,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <ThemeRegistry options={{ key: 'joy' }}>{children}</ThemeRegistry>
+      <body>
+        <ThemeRegistry options={{ key: 'joy' }}>{children}</ThemeRegistry>
+      </body>
     </html>
   )
 }
