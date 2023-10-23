@@ -1,11 +1,10 @@
-import { Content } from '@/libs/models'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { db } from '@/libs/drizzle/db'
+import { contents } from '@/libs/drizzle/schema'
+import { NextApiRequest } from 'next'
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export async function POST(req: NextApiRequest) {
   const data = req.body
-  const response = await Content.create(data)
-  res.status(200).json({ response: response })
+  const response = await db.insert(contents).values(data)
+
+  return Response.json(response)
 }

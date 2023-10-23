@@ -1,6 +1,23 @@
+CREATE TABLE IF NOT EXISTS "addresses" (
+	"id" uuid PRIMARY KEY NOT NULL,
+	"address" text NOT NULL,
+	"created_at" timestamp DEFAULT now(),
+	"updated_at" timestamp DEFAULT now()
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "content_addresses" (
 	"content_id" uuid NOT NULL,
 	"address_id" uuid NOT NULL,
+	"created_at" timestamp DEFAULT now(),
+	"updated_at" timestamp DEFAULT now()
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "contents" (
+	"id" uuid PRIMARY KEY NOT NULL,
+	"title" text NOT NULL,
+	"description" text NOT NULL,
+	"url" text NOT NULL,
+	"fileType" text NOT NULL,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now()
 );
@@ -17,23 +34,6 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"email" text NOT NULL,
 	"password" text,
 	"invited" boolean,
-	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp DEFAULT now()
-);
---> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "addresses" (
-	"id" uuid PRIMARY KEY NOT NULL,
-	"address" text NOT NULL,
-	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp DEFAULT now()
-);
---> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "contents" (
-	"id" uuid PRIMARY KEY NOT NULL,
-	"title" text NOT NULL,
-	"description" text NOT NULL,
-	"url" text NOT NULL,
-	"file_type" text NOT NULL,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now()
 );

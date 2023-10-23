@@ -11,7 +11,7 @@ export async function POST(req: NextApiRequest) {
   const data = req.body
   const user = JSON.parse(
     JSON.stringify(
-      await db.query.Users.findMany({
+      await db.query.users.findMany({
         where: (users, { eq }) => eq(users.email, data.email),
       })
     )

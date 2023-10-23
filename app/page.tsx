@@ -4,7 +4,7 @@ import { Button, Grid, Input } from '@mui/joy'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 import NFTImage from '@/public/images/nft_image.png'
-import { getUsers } from '@/libs/api'
+import { getContentItems, getUsers } from '@/libs/api'
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
@@ -26,7 +26,7 @@ export default function Home() {
     setLoading(false)
     // router.push('/dashboard')
 
-    console.log(await getUsers())
+    console.log(await getContentItems())
   }
 
   return (

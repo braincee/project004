@@ -13,12 +13,12 @@ export const contents = pgTable('contents', {
   title: text('title').notNull(),
   description: text('description').notNull(),
   url: text('url').notNull(),
-  fileType: text('file_type').notNull(),
+  fileType: text('fileType').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 })
 
-export const ContentAddresses = pgTable('content_addresses', {
+export const contentAddresses = pgTable('content_addresses', {
   contentId: uuid('content_id')
     .notNull()
     .references(() => contents.id),
@@ -29,14 +29,14 @@ export const ContentAddresses = pgTable('content_addresses', {
   updatedAt: timestamp('updated_at').defaultNow(),
 })
 
-export const Logs = pgTable('logs', {
+export const logs = pgTable('logs', {
   id: uuid('id').primaryKey().notNull(),
   log: text('log').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 })
 
-export const Users = pgTable('users', {
+export const users = pgTable('users', {
   id: uuid('id').primaryKey().notNull(),
   email: text('email').notNull(),
   password: text('password'),
@@ -46,22 +46,22 @@ export const Users = pgTable('users', {
 })
 
 export const addressesRelations = relations(addresses, ({ many }) => ({
-  ContentAddresses: many(ContentAddresses),
+  ContentAddresses: many(contentAddresses),
 }))
 
 export const contentsRelations = relations(contents, ({ many }) => ({
-  ContentAddresses: many(ContentAddresses),
+  ContentAddresses: many(contentAddresses),
 }))
 
 export const ContentAddressesRelations = relations(
-  ContentAddresses,
+  contentAddresses,
   ({ one }) => ({
     address: one(addresses, {
-      fields: [ContentAddresses.addressId],
+      fields: [contentAddresses.addressId],
       references: [addresses.id],
     }),
     content: one(contents, {
-      fields: [ContentAddresses.contentId],
+      fields: [contentAddresses.contentId],
       references: [contents.id],
     }),
   })
