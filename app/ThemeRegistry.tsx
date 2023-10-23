@@ -8,6 +8,7 @@ import CssBaseline from '@mui/joy/CssBaseline'
 import { useState } from 'react'
 import { usePathname, useServerInsertedHTML } from 'next/navigation'
 import theme from '@/libs/theme'
+import { ThirdwebProvider } from '@thirdweb-dev/react'
 
 interface ThemeRegistryProps {
   options: any
@@ -16,6 +17,7 @@ interface ThemeRegistryProps {
 
 export default function ThemeRegistry(props: ThemeRegistryProps) {
   const { options, children } = props
+  const pathname = usePathname()
 
   const [{ cache, flush }] = useState(() => {
     const cache = createCache(options)
@@ -56,6 +58,20 @@ export default function ThemeRegistry(props: ThemeRegistryProps) {
       />
     )
   })
+
+  if (pathname.includes('serve')) {
+    // The ThirdWeb Provider has to wrap the component to be able to have access to useAddress
+    // This is why it is still here
+    // I could not find any other way to wrap it around the component.
+    return (
+      <ThirdwebProvider
+        activeChain='ethereum'
+        clientId='19086ab219f91521de7ac12f38c0a1f0'
+      >
+        {children}
+      </ThirdwebProvider>
+    )
+  }
 
   return (
     <CacheProvider value={cache}>
