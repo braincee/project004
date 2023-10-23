@@ -7,8 +7,7 @@ interface Data {
   address?: string
   title?: string
   description?: string
-  Contents?: any[]
-  Addresses?: any[]
+  ContentAddresses?: any[]
   created_at: Date
   action?: any
 }
@@ -28,7 +27,7 @@ const HeadCells1: readonly HeadCell[] = [
     label: 'Address',
   },
   {
-    id: 'Contents',
+    id: 'ContentAddresses',
     numeric: false,
     disablePadding: false,
     label: 'Content Access',
@@ -55,7 +54,7 @@ const HeadCells2: readonly HeadCell[] = [
     label: 'Description',
   },
   {
-    id: 'Addresses',
+    id: 'ContentAddresses',
     numeric: false,
     disablePadding: false,
     label: 'Address Access',

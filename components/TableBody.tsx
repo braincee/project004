@@ -1,3 +1,4 @@
+'use client'
 import { Delete } from '@mui/icons-material'
 import { Checkbox, CircularProgress, IconButton } from '@mui/joy'
 import { useEffect, useState } from 'react'
@@ -64,16 +65,15 @@ const TableBody = (props: TableBodyProps) => {
       {stableSort(list, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((item: any, index) => {
-          const isItemSelected = isSelected(item.id.toString())
+          const isItemSelected = isSelected(item.id)
           const labelId = `enhanced-table-checkbox-${index}`
-
           return (
             <tr
               onClick={(event) => handleClick(event, item.id.toString())}
               role='checkbox'
               aria-checked={isItemSelected}
               tabIndex={-1}
-              key={item.id}
+              key={item && item.id}
               style={
                 isItemSelected
                   ? ({
@@ -102,8 +102,10 @@ const TableBody = (props: TableBodyProps) => {
                     {item.title}
                   </th>
                   <td>{item.description}</td>
-                  <td>{item.Addresses.length}</td>
-                  <td>{new Date(item.created_at).toDateString()}</td>
+                  <td>
+                    {item.ContentAddresses && item.ContentAddresses.length}
+                  </td>
+                  <td>{new Date(item.createdAt).toDateString()}</td>
                   <td>
                     <IconButton
                       onClick={() => setOrfanValue(item.id)}
@@ -122,8 +124,8 @@ const TableBody = (props: TableBodyProps) => {
                   <th id={labelId} scope='row'>
                     {truncateEthAddress(item.address)}
                   </th>
-                  <td>{item.Contents.length}</td>
-                  <td>{new Date(item.created_at).toDateString()}</td>
+                  <td>{item.ContentAddresses.length}</td>
+                  <td>{new Date(item.createdAt).toDateString()}</td>
                 </>
               )}
             </tr>

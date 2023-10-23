@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import {
   Typography,
@@ -9,25 +10,26 @@ import {
   Link,
 } from '@mui/joy'
 import NextLink from 'next/link'
-// import ModeButton from '../ModeButton'
+import ModeButton from './ModeButton'
 import { usePathname, useRouter } from 'next/navigation'
-// import NextProgress from 'next-progress'
-// import { signOut as signOutNextAuth } from 'next-auth/react'
+import NextProgress from 'next-progress'
+import { signOut as signOutNextAuth } from 'next-auth/react'
 
 const Header = () => {
   const pathname = usePathname()
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
 
-  // const signOut = async () => {
-  //   setLoading(true)
-  //   await signOutNextAuth()
-  //   setLoading(false)
-  //   router.push('/')
-  // }
+  const signOut = async () => {
+    setLoading(true)
+    await signOutNextAuth()
+    setLoading(false)
+    router.push('/')
+  }
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
-      {/* <NextProgress delay={100} options={{ showSpinner: false }} /> */}
+      <NextProgress delay={100} options={{ showSpinner: false }} />
       <Select
         placeholder={
           pathname == '/'
@@ -59,10 +61,10 @@ const Header = () => {
           }}
           aria-label='spacing primary button group'
         >
-          {/* <ModeButton /> */}
+          <ModeButton />
           <Button
             variant='outlined'
-            // onClick={signOut}
+            onClick={signOut}
             loading={loading ? true : false}
           >
             Logout
@@ -122,10 +124,10 @@ const Header = () => {
         sx={{ display: { xs: 'none', md: 'flex' }, gap: 3 }}
         aria-label='spacing primary button group'
       >
-        {/* <ModeButton /> */}
+        <ModeButton />
         <Button
           variant='outlined'
-          // onClick={signOut}
+          onClick={signOut}
           loading={loading ? true : false}
         >
           Logout

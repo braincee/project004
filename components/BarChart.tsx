@@ -10,7 +10,6 @@ const SingleBarChart = dynamic(
 )
 
 const BarChart = ({ addresses }: { addresses: any }) => {
-  console.log(addresses)
   const chartData = () => {
     const data = new Map()
     const labels: any[] = []

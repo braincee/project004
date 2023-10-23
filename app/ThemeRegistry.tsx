@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { usePathname, useServerInsertedHTML } from 'next/navigation'
 import theme from '@/libs/theme'
 import { ThirdwebProvider } from '@thirdweb-dev/react'
+import Header from '@/components/Header'
 
 interface ThemeRegistryProps {
   options: any
@@ -103,7 +104,10 @@ export default function ThemeRegistry(props: ThemeRegistryProps) {
             },
           }}
         />
-        {children}
+        <section>
+          {pathname !== '/' && <Header />}
+          {children}
+        </section>
       </CssVarsProvider>
     </CacheProvider>
   )
