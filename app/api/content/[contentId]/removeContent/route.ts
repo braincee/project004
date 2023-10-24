@@ -1,10 +1,9 @@
 import { db } from '@/libs/drizzle/db'
 import { addresses, contents } from '@/libs/drizzle/schema'
 import { eq } from 'drizzle-orm'
-import { NextApiRequest, NextApiResponse } from 'next'
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-  const { id, keep_orfans } = req.body
+export async function POST(req: Request) {
+  const { id, keep_orfans } = await req.json()
   if (keep_orfans) {
     await db.delete(contents).where(eq(contents.id, id))
   } else {

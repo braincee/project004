@@ -1,18 +1,16 @@
-import { ContentAddress } from '@/libs/models'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { db } from '@/libs/drizzle/db'
+import { contentAddresses } from '@/libs/drizzle/schema'
+import { and, eq } from 'drizzle-orm'
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const { contentIds, addressId } = req.body
+export default async function POST(req: Request) {
+  const { contentIds, addressId } = await req.json()
   const response = await contentIds.forEach((contentId: string) => {
-    ContentAddress.destroy({
-      where: {
-        address_id: addressId,
-        content_id: contentId,
-      },
-    })
+    db.delete(contentAddresses).where(
+      and(
+        eq(contentAddresses.contentId, contentId),
+        eq(contentAddresses.addressId, addressId)
+      )
+    )
   })
-  res.status(200).json({ response: response })
+  return Response.json({ response })
 }

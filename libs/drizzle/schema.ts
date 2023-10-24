@@ -1,11 +1,11 @@
-import { relations } from 'drizzle-orm'
+import { relations, sql } from 'drizzle-orm'
 import { boolean, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
 
 export const addresses = pgTable('addresses', {
   id: uuid('id').primaryKey().notNull(),
   address: text('address').notNull(),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  createdAt: timestamp('created_at', { mode: 'date' }).default(sql`now()`),
+  updatedAt: timestamp('updated_at', { mode: 'date' }).default(sql`now()`),
 })
 
 export const contents = pgTable('contents', {
@@ -14,8 +14,8 @@ export const contents = pgTable('contents', {
   description: text('description').notNull(),
   url: text('url').notNull(),
   fileType: text('fileType').notNull(),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  createdAt: timestamp('created_at', { mode: 'date' }).default(sql`now()`),
+  updatedAt: timestamp('updated_at', { mode: 'date' }).default(sql`now()`),
 })
 
 export const contentAddresses = pgTable('content_addresses', {
@@ -25,15 +25,15 @@ export const contentAddresses = pgTable('content_addresses', {
   addressId: uuid('address_id')
     .notNull()
     .references(() => addresses.id),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  createdAt: timestamp('created_at', { mode: 'date' }).default(sql`now()`),
+  updatedAt: timestamp('updated_at', { mode: 'date' }).default(sql`now()`),
 })
 
 export const logs = pgTable('logs', {
   id: uuid('id').primaryKey().notNull(),
   log: text('log').notNull(),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  createdAt: timestamp('created_at', { mode: 'date' }).default(sql`now()`),
+  updatedAt: timestamp('updated_at', { mode: 'date' }).default(sql`now()`),
 })
 
 export const users = pgTable('users', {
@@ -41,8 +41,8 @@ export const users = pgTable('users', {
   email: text('email').notNull(),
   password: text('password'),
   invited: boolean('invited'),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  createdAt: timestamp('created_at', { mode: 'date' }).default(sql`now()`),
+  updatedAt: timestamp('updated_at', { mode: 'date' }).default(sql`now()`),
 })
 
 export const addressesRelations = relations(addresses, ({ many }) => ({

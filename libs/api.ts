@@ -51,6 +51,7 @@ export const addUser = async ({
 }) => {
   const hashPassword = await hash(password, 10)
   const data = {
+    id: uuidV4(),
     email,
     password: hashPassword,
     invited: true,
@@ -90,7 +91,7 @@ export const addContent = async ({
       fileType,
     }
   } else {
-    const data = {
+    data = {
       id,
       title,
       description,

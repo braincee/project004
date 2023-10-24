@@ -5,5 +5,5 @@ export async function GET() {
     orderBy: (users, { desc }) => [desc(users.createdAt)],
   })
 
-  return Response.json(response)
+  return Response.json({ response })
 }

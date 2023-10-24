@@ -1,13 +1,23 @@
-import { Address, Content } from "@/libs/models";
-import { NextApiRequest, NextApiResponse } from "next";
+import { db } from '@/libs/drizzle/db'
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const { contentId } = req.query as any;
-  const response = await Content.findByPk(contentId, {
-    include: Address,
-  });
-  res.status(200).json({ response: response });
+export default async function GET(req: Request) {
+  const { contentId } = await req.json()
+  const response = await db.query.contents.findMany({
+    where: (content, { eq }) => eq(content.id, contentId),
+    with: {
+      ContentAddresses: {
+        columns: {
+          contentId: false,
+          addressId: false,
+          createdAt: false,
+          updatedAt: false,
+        },
+        with: {
+          address: true,
+        },
+      },
+    },
+  })
+
+  return Response.json({ response })
 }

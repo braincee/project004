@@ -1,11 +1,11 @@
-import { Address } from '@/libs/models'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { db } from '@/libs/drizzle/db'
+import { addresses } from '@/libs/drizzle/schema'
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const data = req.body
-  const response = await Address.create(data)
-  res.status(200).json({ response: response })
+export default async function POST(req: Request) {
+  const data = await req.json()
+  const date = new Date()
+  const response = await db
+    .insert(addresses)
+    .values({ ...data, createdAt: date, updatedAt: date })
+  return Response.json({ response })
 }

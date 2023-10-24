@@ -1,10 +1,12 @@
 import { db } from '@/libs/drizzle/db'
 import { contents } from '@/libs/drizzle/schema'
-import { NextApiRequest } from 'next'
 
-export async function POST(req: NextApiRequest) {
-  const data = req.body
-  const response = await db.insert(contents).values(data)
+export async function POST(req: Request) {
+  const data = await req.json()
+  const date = new Date()
+  const response = await db
+    .insert(contents)
+    .values({ ...data, createdAt: date, updatedAt: date })
 
-  return Response.json(response)
+  return Response.json({ response })
 }

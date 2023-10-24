@@ -1,5 +1,4 @@
 import supabase from '@/libs/supabase'
-import { NextApiRequest } from 'next'
 import { StorageClient } from '@supabase/storage-js'
 
 const storageClient = new StorageClient(
@@ -10,8 +9,8 @@ const storageClient = new StorageClient(
   }
 )
 
-export async function POST(req: NextApiRequest) {
-  const filename = req.body
+export async function GET(req: Request) {
+  const filename = await req.json()
   const { data } = supabase.storage.from('contents').getPublicUrl(filename)
   const index = data.publicUrl.indexOf('contents/')
   const length = 'contents/'.length
@@ -28,5 +27,5 @@ export async function POST(req: NextApiRequest) {
     mimeType,
   }
 
-  return Response.json(response)
+  return Response.json({ response })
 }

@@ -1,15 +1,24 @@
-import { Address, Content } from '@/libs/models'
+import { db } from '@/libs/drizzle/db'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const { addressId } = req.query as any
-  console.log(addressId)
-  const response = await Address.findOne({
-    where: { id: addressId },
-    include: Content,
+export default async function GET(req: Request) {
+  const { addressId } = await req.json()
+  const response = await db.query.addresses.findMany({
+    where: (address, { eq }) => eq(address.id, addressId),
+    with: {
+      ContentAddresses: {
+        columns: {
+          contentId: false,
+          addressId: false,
+          createdAt: false,
+          updatedAt: false,
+        },
+        with: {
+          content: true,
+        },
+      },
+    },
   })
-  res.status(200).json({ response: response })
+
+  return Response.json({ response })
 }

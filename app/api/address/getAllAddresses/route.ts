@@ -1,13 +1,21 @@
-import { Address, Content } from '@/libs/models'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { db } from '@/libs/drizzle/db'
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const response = await Address.findAll({
-    order: [['created_at', 'DESC']],
-    include: { model: Content },
+export default async function GET() {
+  const response = await db.query.addresses.findMany({
+    orderBy: (address, { desc }) => [desc(address.createdAt)],
+    with: {
+      ContentAddresses: {
+        columns: {
+          contentId: false,
+          addressId: false,
+          createdAt: false,
+          updatedAt: false,
+        },
+        with: {
+          content: true,
+        },
+      },
+    },
   })
-  res.status(200).json({ response: response })
+  return Response.json({ response })
 }
