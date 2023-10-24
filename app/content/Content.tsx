@@ -300,7 +300,13 @@ const Content = ({ contentItems, addresses }: any) => {
 
   return (
     <Box
-      sx={{ px: { md: 4 }, display: 'flex', flexDirection: 'column', gap: 2 }}
+      sx={{
+        py: 2,
+        px: { md: 4 },
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+      }}
     >
       <Stack spacing={1}>
         <Sheet

@@ -40,7 +40,9 @@ const ManageUser = ({ users }: { users: any[] }) => {
   }
 
   return (
-    <Box sx={{ px: 4, display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Box
+      sx={{ py: 2, px: 4, display: 'flex', flexDirection: 'column', gap: 2 }}
+    >
       <Box sx={{ p: 2, border: '1px solid #ccc' }}>
         {/* Content for the first box */}
         <Typography level='h4' sx={{ marginBottom: 2 }}>

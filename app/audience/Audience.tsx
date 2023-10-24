@@ -216,6 +216,7 @@ const Audience = ({ addresses, contentItems }: any) => {
   return (
     <Box
       sx={{
+        py: 2,
         px: { md: 4 },
         display: 'flex',
         flexDirection: 'column',
