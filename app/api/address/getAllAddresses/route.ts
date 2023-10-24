@@ -1,6 +1,6 @@
 import { db } from '@/libs/drizzle/db'
 
-export default async function GET() {
+export async function GET() {
   const response = await db.query.addresses.findMany({
     orderBy: (address, { desc }) => [desc(address.createdAt)],
     with: {

@@ -62,12 +62,12 @@ const MyModal = (props: MyModalProps) => {
       let itemIds: string[] = []
       if (open) {
         if (item.title) {
-          item.Addresses.forEach((address: any) => {
-            itemIds.push(address.id)
+          item.ContentAddresses.forEach((address: any) => {
+            itemIds.push(address.address.id)
           })
         } else if (item.address) {
-          item.Contents.forEach((content: any) => {
-            itemIds.push(content.id)
+          item.ContentAddresses.forEach((content: any) => {
+            itemIds.push(content.content.id)
           })
         }
         selected.forEach((value) => {

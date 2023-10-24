@@ -1,16 +1,19 @@
 import { db } from '@/libs/drizzle/db'
 import { contentAddresses } from '@/libs/drizzle/schema'
 
-export default async function POST(req: Request) {
+export async function POST(req: Request) {
   const { addressId, contentIds } = await req.json()
   const date = new Date()
-  const response = await contentIds.forEach((contentId: any) => {
-    db.insert(contentAddresses).values({
-      addressId,
-      contentId,
-      createdAt: date,
-      updatedAt: date,
+  const response = Promise.all(
+    contentIds.forEach(async (contentId: any) => {
+      await db.insert(contentAddresses).values({
+        addressId,
+        contentId,
+        createdAt: date,
+        updatedAt: date,
+      })
     })
-  })
+  )
+
   return Response.json({ response })
 }

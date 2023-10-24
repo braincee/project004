@@ -4,13 +4,17 @@ import { and, eq } from 'drizzle-orm'
 
 export async function POST(req: Request) {
   const { contentId, addressIds } = await req.json()
-  const response = await addressIds.forEach((addressId: string) => {
-    db.delete(contentAddresses).where(
-      and(
-        eq(contentAddresses.contentId, contentId),
-        eq(contentAddresses.addressId, addressId)
-      )
-    )
-  })
+  const response = Promise.all(
+    addressIds.forEach(async (addressId: string) => {
+      await db
+        .delete(contentAddresses)
+        .where(
+          and(
+            eq(contentAddresses.contentId, contentId),
+            eq(contentAddresses.addressId, addressId)
+          )
+        )
+    })
+  )
   return Response.json({ response })
 }

@@ -1,7 +1,7 @@
 import { db } from '@/libs/drizzle/db'
 import { addresses } from '@/libs/drizzle/schema'
 
-export default async function POST(req: Request) {
+export async function POST(req: Request) {
   const data = await req.json()
   const date = new Date()
   const response = await db

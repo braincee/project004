@@ -1,7 +1,6 @@
 import { db } from '@/libs/drizzle/db'
-import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function GET(req: Request) {
+export async function GET(req: Request) {
   const { addressId } = await req.json()
   const response = await db.query.addresses.findMany({
     where: (address, { eq }) => eq(address.id, addressId),

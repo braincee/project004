@@ -9,7 +9,7 @@ const storageClient = new StorageClient(
   }
 )
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   const filename = await req.json()
   const { data } = supabase.storage.from('contents').getPublicUrl(filename)
   const index = data.publicUrl.indexOf('contents/')
